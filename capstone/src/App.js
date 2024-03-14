@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
-import Activities from "./scenes/activities";
+import Activities from "./scenes/activities/activities";
 import Reports from "./scenes/reports";
 import Beneficiaries from "./scenes/beneficiaries/beneficiaries";
 import Calendar from "./scenes/calendar/calendar";

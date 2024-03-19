@@ -15,18 +15,17 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ActivitiesForm from "./activitiesForm";
 import ActivitiesMonitoring from "./activitiesMonitoring";
+import ActivitiesEdit from "./activitiesEdit";
 
 const ActivityContainer = ({ children }) => (
-  <Box m="20px" sx={{ maxHeight: 'calc(90vh - 160px)', overflowY: 'auto' }}
-  paddingRight={3}
-  >
+  <Box m="20px" sx={{ maxHeight: 'calc(90vh - 160px)', overflowY: 'auto' }}>
     <Grid container spacing={3}>
       {children}
     </Grid>
   </Box>
 );
 
-const ActivityBox = ({ activity, onDelete, onView, onEdit }) => (
+const ActivityBox = ({ activity, onDelete, onEdit, onView }) => (
   <Grid item xs={12}>
     <Box
       key={activity.id}
@@ -49,7 +48,7 @@ const ActivityBox = ({ activity, onDelete, onView, onEdit }) => (
         </Typography>
       </Box>
       <Box>
-        <Button color="primary" onClick={() => onEdit(activity.id)} margin="1">
+        <Button color="primary" onClick={() => onEdit(activity)} margin="1">
           <EditIcon />
         </Button>
         <Button color="info" onClick={() => onView(activity)} margin="1">
@@ -69,10 +68,16 @@ const Activities = () => {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
   const [sortedActivities, setSortedActivities] = useState(mockDataActivities);
+  const [editDialogData, setEditDialogData] = useState(null);
+  const [openViewDialog, setOpenViewDialog] = useState(false); // Renamed from openDialog
+  const [openEditDialog, setOpenEditDialog] = useState(false); // Add this line
+  
 
   const handleView = (activity) => {
     setSelectedRow(activity);
+    setOpenViewDialog(true); // Open the view dialog
   };
+
 
   const handleDelete = (id) => {
     console.log(`Delete row with ID: ${id}`);
@@ -105,10 +110,14 @@ const Activities = () => {
     setSortedActivities(sortedByDate);
   };
 
-  const handleEdit = (id) => {
-    console.log(`Edit row with ID: ${id}`);
-    // Add your edit functionality here, such as redirecting to activitiesEdit
+  const handleEdit = (activity) => {
+    setSelectedRow(activity);
+    setEditDialogData(activity); // Set the selected activity for editing
+    setOpenEditDialog(true); // Open the edit dialog
   };
+  
+
+
 
   const months = [
     "January",
@@ -125,7 +134,9 @@ const Activities = () => {
     "December",
   ];
 
-  const years = ["2022", "2023", "2024", "2025"];
+  // Dynamically generate years starting from 100 years ago to 100 years in the future
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 201 }, (_, index) => (currentYear - 100) + index);
 
   return (
     <>
@@ -179,19 +190,43 @@ const Activities = () => {
             key={activity.id}
             activity={activity}
             onDelete={handleDelete}
-            onView={handleView}
             onEdit={handleEdit}
+            onView={handleView}
           />
         ))}
       </ActivityContainer>
 
-      {selectedRow && <ActivitiesMonitoring activity={selectedRow} />}
+      {openEditDialog && editDialogData && (
+  <ActivitiesEdit
+    openEditDialog={openEditDialog} // Pass the state to control the dialog
+    onClose={() => setOpenEditDialog(false)} // Close the dialog
+    handleSubmit={(formData) => {
+      // Handle the form submission, e.g., update the activity with new data
+      console.log("Submitting edited activity:", formData);
+      setOpenEditDialog(false); // Close the dialog after handling submit
+    }}
+    initialValues={editDialogData} // Pass initial values to ActivitiesEdit
+  />
+)}
+
+
+
+
       {openActivitiesForm && (
         <ActivitiesForm
           onClose={handleCloseAddForm}
           onAddActivity={handleAddActivity}
           beneficiaries={mockDataBeneficiaries}
         />
+      )}
+
+      {openViewDialog && selectedRow && (
+        <ActivitiesMonitoring
+          openViewDialog={openViewDialog}
+          setOpenDialog={setOpenViewDialog} // Ensure setOpenViewDialog is passed
+          activity={selectedRow}
+        />
+
       )}
     </>
   );

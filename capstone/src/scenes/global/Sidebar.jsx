@@ -11,6 +11,7 @@ import FileOpenOutlinedIcon from '@mui/icons-material/FileOpenOutlined';
 import Diversity1OutlinedIcon from '@mui/icons-material/Diversity1Outlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme();
@@ -119,7 +120,6 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
             <Item
               title="Activities"
               to="/activities"
@@ -128,6 +128,13 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
+              title="BNS"
+              to="/bns"
+              icon={<PeopleOutlineIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+                        <Item
               title="Reports"
               to="/reports"
               icon={<FileOpenOutlinedIcon />}

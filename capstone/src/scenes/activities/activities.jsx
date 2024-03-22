@@ -19,14 +19,14 @@ import ActivitiesEdit from "./activitiesEdit";
 
 const ActivityContainer = ({ children }) => (
   <Box m="20px" sx={{ maxHeight: 'calc(90vh - 160px)', overflowY: 'auto' }}>
-    <Grid container spacing={3}>
+    <Grid container spacing={3} paddingRight="7">
       {children}
     </Grid>
   </Box>
 );
 
 const ActivityBox = ({ activity, onDelete, onEdit, onView }) => (
-  <Grid item xs={12}>
+  <Grid item xs={12}paddingRight={2}>
     <Box
       key={activity.id}
       border={1}
@@ -48,7 +48,7 @@ const ActivityBox = ({ activity, onDelete, onEdit, onView }) => (
         </Typography>
       </Box>
       <Box>
-        <Button color="primary" onClick={() => onEdit(activity)} margin="1">
+        <Button color="primary" onClick={() => onEdit(activity)}>
           <EditIcon />
         </Button>
         <Button color="info" onClick={() => onView(activity)} margin="1">

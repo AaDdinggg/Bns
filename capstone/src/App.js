@@ -8,6 +8,7 @@ import Activities from "./scenes/activities/activities";
 import Reports from "./scenes/reports";
 import Beneficiaries from "./scenes/beneficiaries/beneficiaries";
 import Calendar from "./scenes/calendar/calendar";
+import Bns from "./scenes/bns/bns";
 // import Archives from "./scenes/archives";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/reports" element={<Reports />} />
         <Route path="/beneficiaries" element={<Beneficiaries />} /> 
         <Route path="/calendar" element={<Calendar />} /> 
+        <Route path="/bns" element={<Bns />} />
         {/* <Route path="/archives" element={<Archives />} /> */}
       </Routes>
       </main>
